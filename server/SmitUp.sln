@@ -1,0 +1,86 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2015
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Domain", "1 - Domain", "{A24B1489-4C3E-404E-AD81-9AC60AF1EACE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Core", "2 - Core", "{846DB331-8050-4FA5-B0E0-8C08A222195C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmitUp.Domain.Core", "src\SmitUp.Domain.Core\SmitUp.Domain.Core.csproj", "{03F3FD7F-A932-456D-B14F-1389543EC7B2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Customer", "3 - Customer", "{639F7276-68DF-4F67-B5FD-C5B0EB282DBB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Infra", "4 - Infra", "{54B1946F-E6C2-4E2C-8887-C8EC5B2B875E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0 - API", "0 - API", "{6681101E-1272-4FE9-B552-041757BB2EEB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.2 - CrossCutting", "4.2 - CrossCutting", "{5BFE7571-99C6-4AB4-8CA0-908FC8A1C878}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmitUp.Api", "src\SmitUp.Api\SmitUp.Api.csproj", "{B5AFD822-B7C4-47CB-A8D7-9ED42D997A3E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmitUp.Infra.CrossCutting.IoC", "src\SmitUp.Infra.CrossCutting.IoC\SmitUp.Infra.CrossCutting.IoC.csproj", "{13D48FB1-DF57-48EB-963B-141DBCE011CF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmitUp.Infra.CrossCutting.Bus", "src\SmitUp.Infra.CrossCutting.Bus\SmitUp.Infra.CrossCutting.Bus.csproj", "{9FB0F991-B4C4-4110-BD78-E2BB4F268DDD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmitUp.Customers.Domain", "src\SmitUp.Customers.Domain\SmitUp.Customers.Domain.csproj", "{930A5ECE-4A5B-4F0C-9F42-9CB54CDAB402}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmitUp.Customers.Infra", "src\SmitUp.Customers.Infra\SmitUp.Customers.Infra.csproj", "{67AD1BE6-0C06-434C-BFFB-B095C8B10EFD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.1 - Data", "4.1 - Data", "{8C1DAC7B-909C-4E88-8367-D1F2E4B3CAFE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmitUp.Infra.Data", "src\SmitUp.Infra.Data\SmitUp.Infra.Data.csproj", "{0133B936-BE20-4FEE-AB27-9AD9E3D08A27}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{03F3FD7F-A932-456D-B14F-1389543EC7B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03F3FD7F-A932-456D-B14F-1389543EC7B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03F3FD7F-A932-456D-B14F-1389543EC7B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03F3FD7F-A932-456D-B14F-1389543EC7B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5AFD822-B7C4-47CB-A8D7-9ED42D997A3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5AFD822-B7C4-47CB-A8D7-9ED42D997A3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5AFD822-B7C4-47CB-A8D7-9ED42D997A3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5AFD822-B7C4-47CB-A8D7-9ED42D997A3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13D48FB1-DF57-48EB-963B-141DBCE011CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13D48FB1-DF57-48EB-963B-141DBCE011CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13D48FB1-DF57-48EB-963B-141DBCE011CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13D48FB1-DF57-48EB-963B-141DBCE011CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FB0F991-B4C4-4110-BD78-E2BB4F268DDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FB0F991-B4C4-4110-BD78-E2BB4F268DDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FB0F991-B4C4-4110-BD78-E2BB4F268DDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FB0F991-B4C4-4110-BD78-E2BB4F268DDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{930A5ECE-4A5B-4F0C-9F42-9CB54CDAB402}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{930A5ECE-4A5B-4F0C-9F42-9CB54CDAB402}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{930A5ECE-4A5B-4F0C-9F42-9CB54CDAB402}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{930A5ECE-4A5B-4F0C-9F42-9CB54CDAB402}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67AD1BE6-0C06-434C-BFFB-B095C8B10EFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67AD1BE6-0C06-434C-BFFB-B095C8B10EFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67AD1BE6-0C06-434C-BFFB-B095C8B10EFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67AD1BE6-0C06-434C-BFFB-B095C8B10EFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0133B936-BE20-4FEE-AB27-9AD9E3D08A27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0133B936-BE20-4FEE-AB27-9AD9E3D08A27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0133B936-BE20-4FEE-AB27-9AD9E3D08A27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0133B936-BE20-4FEE-AB27-9AD9E3D08A27}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{03F3FD7F-A932-456D-B14F-1389543EC7B2} = {846DB331-8050-4FA5-B0E0-8C08A222195C}
+		{5BFE7571-99C6-4AB4-8CA0-908FC8A1C878} = {54B1946F-E6C2-4E2C-8887-C8EC5B2B875E}
+		{B5AFD822-B7C4-47CB-A8D7-9ED42D997A3E} = {6681101E-1272-4FE9-B552-041757BB2EEB}
+		{13D48FB1-DF57-48EB-963B-141DBCE011CF} = {5BFE7571-99C6-4AB4-8CA0-908FC8A1C878}
+		{9FB0F991-B4C4-4110-BD78-E2BB4F268DDD} = {5BFE7571-99C6-4AB4-8CA0-908FC8A1C878}
+		{930A5ECE-4A5B-4F0C-9F42-9CB54CDAB402} = {639F7276-68DF-4F67-B5FD-C5B0EB282DBB}
+		{67AD1BE6-0C06-434C-BFFB-B095C8B10EFD} = {639F7276-68DF-4F67-B5FD-C5B0EB282DBB}
+		{8C1DAC7B-909C-4E88-8367-D1F2E4B3CAFE} = {54B1946F-E6C2-4E2C-8887-C8EC5B2B875E}
+		{0133B936-BE20-4FEE-AB27-9AD9E3D08A27} = {8C1DAC7B-909C-4E88-8367-D1F2E4B3CAFE}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {95874DDE-B4EB-44A0-8E57-553E912547A7}
+	EndGlobalSection
+EndGlobal

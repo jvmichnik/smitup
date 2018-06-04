@@ -1,0 +1,18 @@
+version: '3'
+ 
+services:
+  database:
+    image: db-postgres
+    restart: always
+    build:
+      context: ./db
+      dockerfile: Dockerfile
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: 1231234
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+ 
+volumes:
+  pgdata:
