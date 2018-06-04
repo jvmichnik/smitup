@@ -8,7 +8,6 @@ using SmitUp.Customers.Domain.Repositories;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using SmitUp.Customers.Domain.Transaction;
 
 namespace SmitUp.Customers.Domain.Commands.CustomerCommands.Create
 {
@@ -17,7 +16,7 @@ namespace SmitUp.Customers.Domain.Commands.CustomerCommands.Create
         private readonly IMediatorHandler _bus;
         private readonly ICustomerRepository _repository;
 
-        public CreateCustomerHandler(ICustomerUow uow, IMediatorHandler bus,INotificationHandler<DomainNotification> notifications, ICustomerRepository repository) 
+        public CreateCustomerHandler(IUnitOfWork uow, IMediatorHandler bus,INotificationHandler<DomainNotification> notifications, ICustomerRepository repository) 
             : base(uow, bus, notifications)
         {
             _bus = bus;
@@ -34,7 +33,7 @@ namespace SmitUp.Customers.Domain.Commands.CustomerCommands.Create
             if (await VerifyCustomerExists(command))
                 return await Task.FromResult<CreateCustomerResponse>(null);
 
-            var customer = new Customer(command.Name,command.Email,command.Gender,command.Birthday,command.MaritalStatus,user);
+            var customer = new Customer(user.Id,command.Name,command.Email,command.Gender,command.Birthday,command.MaritalStatus,user);
 
             await _repository.SaveCustomer(customer);
 

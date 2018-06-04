@@ -6,9 +6,9 @@ namespace SmitUp.Customers.Domain.Entities
 {
     public class Customer : Entity
     {
-        public Customer(string name, string email, string gender, DateTime birthday, EMaritalStatus maritalStatus, User user)
+        public Customer(Guid id,string name, string email, string gender, DateTime birthday, EMaritalStatus maritalStatus, User user)
         {
-            Id = Guid.NewGuid();
+            Id = id;
             Name = name;
             Email = email;
             Gender = gender;
@@ -26,6 +26,6 @@ namespace SmitUp.Customers.Domain.Entities
         public EMaritalStatus MaritalStatus { get; private set; }
         public Guid UserId { get; private set; }
 
-        public virtual User User { get; private set; }
+        public User User { get; protected set; }
     }
 }

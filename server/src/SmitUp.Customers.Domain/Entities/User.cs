@@ -8,7 +8,6 @@ namespace SmitUp.Customers.Domain.Entities
     {
         public User(string username, string password)
         {
-            Id = Guid.NewGuid();
             Username = username;
             Password = Encrypt(password);
             Active = false;
@@ -21,6 +20,8 @@ namespace SmitUp.Customers.Domain.Entities
 
         public void Activate() => Active = true;
         public void Deactivate() => Active = false;
+
+        public Customer Customer { get; protected set; }
 
         public bool Authenticate(string username, string password)
         {

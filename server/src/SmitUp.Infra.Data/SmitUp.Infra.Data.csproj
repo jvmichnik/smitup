@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SmitUp.Customers.Infra\SmitUp.Customers.Infra.csproj" />
     <ProjectReference Include="..\SmitUp.Domain.Core\SmitUp.Domain.Core.csproj" />
   </ItemGroup>
 

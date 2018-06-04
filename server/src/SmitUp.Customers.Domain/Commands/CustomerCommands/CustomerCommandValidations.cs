@@ -77,7 +77,7 @@ namespace SmitUp.Customers.Domain.Commands.CustomerCommands
             RuleFor(x => x.Gender)
                 .Custom((v, context) =>
                 {
-                    if (!(v.ToUpper().Equals('M') || v.ToUpper().Equals('F')))
+                    if (!(v.ToUpper().Equals("M") || v.ToUpper().Equals("F")))
                         context.AddFailure(GENDER_INVALID_MSG);
                 });
         }

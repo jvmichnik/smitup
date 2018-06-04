@@ -5,9 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SmitUp.Customers.Domain\SmitUp.Customers.Domain.csproj" />
     <ProjectReference Include="..\SmitUp.Domain.Core\SmitUp.Domain.Core.csproj" />
-    <ProjectReference Include="..\SmitUp.Infra.Data\SmitUp.Infra.Data.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,13 +1,15 @@
 ﻿using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using SmitUp.Customers.Domain.Commands.CustomerCommands.Create;
-using SmitUp.Customers.Domain.Transaction;
+using SmitUp.Customers.Domain.Repositories;
 using SmitUp.Customers.Infra;
+using SmitUp.Customers.Infra.Repositories;
 using SmitUp.Domain.Core.Behavior;
 using SmitUp.Domain.Core.Bus;
 using SmitUp.Domain.Core.Notifications;
 using SmitUp.Domain.Core.Transaction;
 using SmitUp.Infra.CrossCutting.Bus;
+using SmitUp.Infra.Data;
 
 namespace SmitUp.Infra.CrossCutting.IoC
 {
@@ -37,12 +39,12 @@ namespace SmitUp.Infra.CrossCutting.IoC
             services.AddScoped<IRequestHandler<CreateCustomerCommand, CreateCustomerResponse>, CreateCustomerHandler>();
         }
         private static void RegisterRepositories(IServiceCollection services)
-        {
-            // Repositories
+        {           
+             services.AddScoped<ICustomerRepository, CustomerRepository>();
         }
         private static void RegisterUow(IServiceCollection services)
         {
-            services.AddScoped<ICustomerUow, CustomerUow>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
         private static void RegisterEvents(IServiceCollection services)
         {

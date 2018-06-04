@@ -1,14 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SmitUp.Domain.Core.Commands;
 using SmitUp.Domain.Core.Transaction;
+using SmitUp.Infra.Data.Context;
 using System.Threading.Tasks;
 
 namespace SmitUp.Infra.Data
 {
-    public abstract class UnitOfWork<T>: IUnitOfWork where T : DbContext
+    public class UnitOfWork : IUnitOfWork
     {
-        private readonly T _context;
-        public UnitOfWork(T context)
+        private readonly SmitUpContext _context;
+        public UnitOfWork(SmitUpContext context)
         {
             _context = context;
         }
