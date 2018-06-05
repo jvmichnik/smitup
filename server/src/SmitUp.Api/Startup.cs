@@ -25,18 +25,8 @@ namespace SmitUp.Api
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //var contextOptions = new DbContextOptionsBuilder()
-            //    .UseNpgsql(Configuration.GetConnectionString("smitup"))
-            //    .Options;
-
-            //services
-            //    .AddEntityFrameworkNpgsql()
-            //    .AddSingleton(contextOptions)
-            //.AddScoped<DbContext, SmitUpContext>();
-
             services.AddEntityFrameworkNpgsql()
                .AddDbContext<SmitUpContext>(options => options.UseNpgsql(Configuration.GetConnectionString("smitup")));
 
@@ -48,7 +38,6 @@ namespace SmitUp.Api
 
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())

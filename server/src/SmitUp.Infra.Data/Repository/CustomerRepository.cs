@@ -2,20 +2,21 @@
 using SmitUp.Customers.Domain.Entities;
 using SmitUp.Customers.Domain.Repositories;
 using SmitUp.Domain.Core.Transaction;
+using SmitUp.Infra.Data.Context;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmitUp.Customers.Infra.Repositories
+namespace SmitUp.Infra.Data.Repository
 {
     public class CustomerRepository : ICustomerRepository
     {
-        private readonly DbContext _contexto;
+        private readonly SmitUpContext _contexto;
         private readonly DbSet<Customer> _customer;
         private readonly DbSet<User> _user;
 
-        public CustomerRepository(DbContext contexto)
+        public CustomerRepository(SmitUpContext contexto)
         {
             _contexto = contexto;
             _customer = _contexto.Set<Customer>();

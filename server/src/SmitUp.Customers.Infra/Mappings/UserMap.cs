@@ -12,6 +12,9 @@ namespace SmitUp.Customers.Infra.Mappings
 
             builder.ToTable("user", "account");
 
+            builder.Property(x => x.Id)
+                .HasColumnName("id");
+
             builder.Property(x => x.Username)
                 .HasMaxLength(30)
                 .HasColumnName("username");

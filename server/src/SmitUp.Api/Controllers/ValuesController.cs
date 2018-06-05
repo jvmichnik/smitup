@@ -34,15 +34,7 @@ namespace SmitUp.Api.Controllers
         {
             var command = new CreateCustomerCommand("teste","123123123","testeteste","teste@teste.com","M",new DateTime(2016,10,10),EMaritalStatus.Single);
 
-            try
-            {
-                await _bus.SendCommand(command);
-            }
-            catch (Exception e)
-            {
-
-                throw;
-            }
+            await _bus.SendCommand(command);
 
             return "value";
         }

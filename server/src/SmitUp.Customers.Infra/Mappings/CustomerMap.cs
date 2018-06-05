@@ -9,8 +9,12 @@ namespace SmitUp.Customers.Infra.Mappings
         public void Configure(EntityTypeBuilder<Customer> builder)
         {
             builder.HasKey(x => x.Id);
+;
 
             builder.ToTable("customer", "account");
+                
+            builder.Property(x => x.Id)
+                .HasColumnName("id");
 
             builder.Property(x => x.Name)
                 .HasMaxLength(30)
@@ -25,7 +29,7 @@ namespace SmitUp.Customers.Infra.Mappings
                 .HasColumnName("gender");
 
             builder.Property(x => x.Birthday)
-                .HasColumnName("email")
+                .HasColumnName("birthday")
                 .HasColumnType("date");
 
             builder.Property(x => x.MaritalStatus)
@@ -34,10 +38,11 @@ namespace SmitUp.Customers.Infra.Mappings
             builder.Property(x => x.UserId)
                 .HasColumnName("user_id");
 
-            builder.HasOne(x => x.User)
+            builder
+                .HasOne(x => x.User)
                 .WithOne(x => x.Customer)
-                .HasForeignKey("user_id")
-                .HasConstraintName("user_fk");
+                .HasForeignKey<Customer>(x => x.UserId);
+                
         }
     }
 }

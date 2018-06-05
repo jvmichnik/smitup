@@ -4,7 +4,7 @@ using SmitUp.Domain.Core.Transaction;
 using SmitUp.Infra.Data.Context;
 using System.Threading.Tasks;
 
-namespace SmitUp.Infra.Data
+namespace SmitUp.Infra.Data.Uow
 {
     public class UnitOfWork : IUnitOfWork
     {

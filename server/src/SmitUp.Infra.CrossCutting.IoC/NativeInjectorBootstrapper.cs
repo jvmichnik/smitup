@@ -2,14 +2,13 @@
 using Microsoft.Extensions.DependencyInjection;
 using SmitUp.Customers.Domain.Commands.CustomerCommands.Create;
 using SmitUp.Customers.Domain.Repositories;
-using SmitUp.Customers.Infra;
-using SmitUp.Customers.Infra.Repositories;
 using SmitUp.Domain.Core.Behavior;
 using SmitUp.Domain.Core.Bus;
 using SmitUp.Domain.Core.Notifications;
 using SmitUp.Domain.Core.Transaction;
 using SmitUp.Infra.CrossCutting.Bus;
-using SmitUp.Infra.Data;
+using SmitUp.Infra.Data.Repository;
+using SmitUp.Infra.Data.Uow;
 
 namespace SmitUp.Infra.CrossCutting.IoC
 {

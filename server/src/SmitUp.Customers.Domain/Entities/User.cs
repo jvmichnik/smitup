@@ -10,16 +10,11 @@ namespace SmitUp.Customers.Domain.Entities
         {
             Username = username;
             Password = Encrypt(password);
-            Active = false;
         }
         protected User() { }
 
         public string Username { get; private set; }
         public string Password { get; private set; }
-        public bool Active { get; private set; }
-
-        public void Activate() => Active = true;
-        public void Deactivate() => Active = false;
 
         public Customer Customer { get; protected set; }
 
