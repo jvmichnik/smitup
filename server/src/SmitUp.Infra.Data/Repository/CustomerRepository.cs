@@ -30,7 +30,7 @@ namespace SmitUp.Infra.Data.Repository
 
         public async Task<User> GetUser(string username)
         {
-            return await _user.FirstOrDefaultAsync(x => x.Username == username);
+            return await _user.FirstOrDefaultAsync(x => x.Username.ToLower().Equals(username.ToLower()));
         }
 
         public async Task SaveCustomer(Customer customer)

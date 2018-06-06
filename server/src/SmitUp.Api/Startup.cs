@@ -31,10 +31,11 @@ namespace SmitUp.Api
                .AddDbContext<SmitUpContext>(options => options.UseNpgsql(Configuration.GetConnectionString("smitup")));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddCors();
 
             services.AddMediatR(typeof(Startup));
             services.RegisterServices();
-   
+
 
         }
 
@@ -48,6 +49,13 @@ namespace SmitUp.Api
             {
                 app.UseHsts();
             }
+
+            app.UseCors(c =>
+            {
+                c.AllowAnyHeader();
+                c.AllowAnyMethod();
+                c.AllowAnyOrigin();
+            });
 
             app.UseHttpsRedirection();
             app.UseMvc();
