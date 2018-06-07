@@ -75,7 +75,11 @@ namespace SmitUp.Api
             services.AddEntityFrameworkNpgsql()
                .AddDbContext<SmitUpIdentityDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("smitup")));
 
-            services.AddIdentity<User, Role>()
+            services.AddIdentity<User, Role>(
+                options =>
+                {
+                    options.Password.RequiredLength = 8;
+                })
                 .AddEntityFrameworkStores<SmitUpIdentityDbContext>()
                 .AddDefaultTokenProviders();
 

@@ -40,15 +40,12 @@ namespace SmitUp.Api.Controllers
 
             var user = new User(account.UserName, account.Email, account.Password);
 
-            var result = await _userManager.CreateUser(user);
+            var result = await _userManager.ValidateUser(user);
 
             if (result.Succeeded)
             {
                 var command = new CreateCustomerCommand("teste", "123123123", "testeteste", "teste@teste.com", "M", new DateTime(2016, 10, 10), EMaritalStatus.Single, user.Id);
                 var response = await _bus.SendCommand(command);
-
-                if (IsValidOperation())
-                    await _userManager.RemoveUser(user);
 
                 return Response(response);
             }

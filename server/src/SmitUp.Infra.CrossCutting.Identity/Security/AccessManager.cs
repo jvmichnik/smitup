@@ -30,9 +30,11 @@ namespace SmitUp.Infra.CrossCutting.Identity.Security
         {
             return await _userManager.CreateAsync(user, user.PasswordHash);
         }
-        public async Task<IdentityResult> RemoveUser(User user)
+
+        public async Task<IdentityResult> ValidateUser(User user)
         {
-            return await _userManager.RemovePasswordAsync(user);
+            var userValidator = new UserValidator<User>();
+            return await userValidator.ValidateAsync(_userManager,user);
         }
     }
 }
