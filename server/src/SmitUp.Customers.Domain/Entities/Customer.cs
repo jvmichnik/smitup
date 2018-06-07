@@ -6,26 +6,20 @@ namespace SmitUp.Customers.Domain.Entities
 {
     public class Customer : Entity
     {
-        public Customer(Guid id,string name, string email, string gender, DateTime birthday, EMaritalStatus maritalStatus, User user)
+        public Customer(string name, string gender, DateTime birthday, EMaritalStatus maritalStatus, Guid userId)
         {
-            Id = id;
             Name = name;
-            Email = email;
             Gender = gender;
             Birthday = birthday;
             MaritalStatus = maritalStatus;
-            UserId = user.Id;
-            User = user;
+            UserId = userId;
         }
         protected Customer() { }
 
         public string Name { get; private set; }
-        public string Email { get; private set; }
         public string Gender { get; private set; }
         public DateTime Birthday { get; private set; }
         public EMaritalStatus MaritalStatus { get; private set; }
         public Guid UserId { get; private set; }
-
-        public User User { get; protected set; }
     }
 }

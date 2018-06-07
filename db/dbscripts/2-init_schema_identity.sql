@@ -22,7 +22,7 @@ CREATE TABLE account.user
   access_failed_count integer NOT NULL,
   concurrency_stamp varchar NULL,
   lockout_enabled boolean NOT NULL,
-  lockout_end timestamp NOT NULL,
+  lockout_end timestamp NULL,
   security_stamp varchar NULL,
   two_factor_enabled boolean not null,
   CONSTRAINT user_pk PRIMARY KEY (id)

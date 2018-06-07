@@ -20,10 +20,6 @@ namespace SmitUp.Customers.Infra.Mappings
                 .HasMaxLength(30)
                 .HasColumnName("name");
 
-            builder.Property(x => x.Email)
-                .HasMaxLength(200)
-                .HasColumnName("email");
-
             builder.Property(x => x.Gender)
                 .HasMaxLength(1)
                 .HasColumnName("gender");
@@ -38,10 +34,10 @@ namespace SmitUp.Customers.Infra.Mappings
             builder.Property(x => x.UserId)
                 .HasColumnName("user_id");
 
-            builder
-                .HasOne(x => x.User)
-                .WithOne(x => x.Customer)
-                .HasForeignKey<Customer>(x => x.UserId);
+            //builder
+            //    .HasOne(x => x.User)
+            //    .WithOne(x => x.Customer)
+            //    .HasForeignKey<Customer>(x => x.UserId);
                 
         }
     }

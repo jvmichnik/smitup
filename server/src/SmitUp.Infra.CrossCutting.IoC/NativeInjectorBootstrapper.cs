@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using SmitUp.Customers.Domain.Commands.CustomerCommands.Create;
-using SmitUp.Customers.Domain.Repositories;
+using SmitUp.Customers.Domain.Interfaces;
 using SmitUp.Domain.Core.Behavior;
 using SmitUp.Domain.Core.Bus;
 using SmitUp.Domain.Core.Notifications;
@@ -33,18 +33,22 @@ namespace SmitUp.Infra.CrossCutting.IoC
             // Unit of Work
             RegisterUow(services);
         }
+
         private static void RegisterCommands(IServiceCollection services)
         {
             services.AddScoped<IRequestHandler<CreateCustomerCommand, CreateCustomerResponse>, CreateCustomerHandler>();
         }
+
         private static void RegisterRepositories(IServiceCollection services)
         {           
              services.AddScoped<ICustomerRepository, CustomerRepository>();
         }
+
         private static void RegisterUow(IServiceCollection services)
         {
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
+
         private static void RegisterEvents(IServiceCollection services)
         {
             services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();

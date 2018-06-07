@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SmitUp.Domain.Core\SmitUp.Domain.Core.csproj" />
+    <ProjectReference Include="..\SmitUp.Infra.CrossCutting.Identity\SmitUp.Infra.CrossCutting.Identity.csproj" />
   </ItemGroup>
 
 </Project>

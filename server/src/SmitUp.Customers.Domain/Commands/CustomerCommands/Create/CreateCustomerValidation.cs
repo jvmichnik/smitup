@@ -4,10 +4,7 @@
     {
         public CreateCustomerValidation()
         {
-            ValidateUsername();
-            ValidatePassword();
             ValidateName();
-            ValidateEmail();
             ValidateGender();
             ValidateBirthday();
             ValidateMaritalStatus();

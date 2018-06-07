@@ -7,7 +7,7 @@ namespace SmitUp.Customers.Infra.Mappings
         public static void SetConfigurationCustomer(this ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new CustomerMap());
-            modelBuilder.ApplyConfiguration(new UserMap());
+            //modelBuilder.ApplyConfiguration(new UserMap());
         }
     }
 }
