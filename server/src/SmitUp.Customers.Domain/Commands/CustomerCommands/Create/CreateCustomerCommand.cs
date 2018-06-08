@@ -7,12 +7,9 @@ namespace SmitUp.Customers.Domain.Commands.CustomerCommands.Create
 {
     public class CreateCustomerCommand : CustomerCommand, IRequest<CreateCustomerResponse>
     {
-        public CreateCustomerCommand(string username, string password, string name, string email, string gender, DateTime birthday, EMaritalStatus maritalStatus, Guid userId)
+        public CreateCustomerCommand(string name, string gender, DateTime birthday, EMaritalStatus maritalStatus, Guid userId)
         {
-            Username = username;
-            Password = password;
             Name = name;
-            Email = email;
             Gender = gender;
             Birthday = birthday;
             MaritalStatus = maritalStatus;

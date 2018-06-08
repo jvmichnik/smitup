@@ -12,6 +12,14 @@ namespace SmitUp.Infra.CrossCutting.Identity.Models
             Email = email;
             PasswordHash = password;
         }
+
+        public User(string userName, string password)
+        {
+            Id = Guid.NewGuid();
+            UserName = userName;
+            PasswordHash = password;
+        }
+
         public User()
         {
                 

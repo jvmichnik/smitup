@@ -8,6 +8,7 @@
             ValidateGender();
             ValidateBirthday();
             ValidateMaritalStatus();
+            ValidateUserId();
         }
     }
 }

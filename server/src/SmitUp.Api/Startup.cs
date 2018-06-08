@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using SmitUp.Infra.CrossCutting.Identity.Data;
 using SmitUp.Infra.CrossCutting.Identity.Models;
 using SmitUp.Infra.CrossCutting.Identity.Security;
+using SmitUp.Infra.CrossCutting.Identity.Security.TokenConfig;
 using SmitUp.Infra.CrossCutting.IoC;
 using SmitUp.Infra.Data.Context;
 using System;
@@ -78,12 +80,25 @@ namespace SmitUp.Api
             services.AddIdentity<User, Role>(
                 options =>
                 {
-                    options.Password.RequiredLength = 8;
+                    options.User.RequireUniqueEmail = true;
                 })
                 .AddEntityFrameworkStores<SmitUpIdentityDbContext>()
                 .AddDefaultTokenProviders();
 
             services.AddScoped<AccessManager>();
+
+            //Melhorar
+            var signingConfigurations = new SigningConfigurations();
+            services.AddSingleton(signingConfigurations);
+
+            var tokenConfigurations = new TokenConfigurations();
+            new ConfigureFromConfigurationOptions<TokenConfigurations>(
+                Configuration.GetSection("TokenConfigurations"))
+                    .Configure(tokenConfigurations);
+            services.AddSingleton(tokenConfigurations);
+            //\\
+
+            services.AddJwtSecurity(signingConfigurations, tokenConfigurations);
         }
     }
 }

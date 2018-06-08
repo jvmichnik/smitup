@@ -30,7 +30,7 @@ namespace SmitUp.Api.Controllers
             });
         }
 
-        public IActionResult ResponseBadRequest()
+        protected IActionResult ResponseBadRequest()
         {
             return BadRequest(new
             {
@@ -39,12 +39,12 @@ namespace SmitUp.Api.Controllers
             });
         }
 
-        public new IActionResult Response(object result)
+        protected new IActionResult Response(object result)
         {
             return IsValidOperation() ? ResponseOk(result) : ResponseBadRequest();
         }
 
-        public bool IsValidOperation()
+        protected bool IsValidOperation()
         {
             return !_notifications.HasNotifications();
         }
@@ -59,17 +59,17 @@ namespace SmitUp.Api.Controllers
             }
         }
 
-        public Task AddIdentityErrors(IdentityResult result)
+        protected Task AddIdentityErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)
             {
-                NotifyError(result.ToString(), error.Description);
+                NotifyError(error.Code, error.Description);
             }
 
             return Task.CompletedTask;
         }
 
-        public void NotifyError(string code, string message)
+        protected void NotifyError(string code, string message)
         {
             _mediator.RaiseEvent(new DomainNotification(code, message));
         }

@@ -31,10 +31,10 @@ namespace SmitUp.Customers.Domain.Commands.CustomerCommands.Create
 
             if (await Commit())
             {
-                var customerEvent = new CreateCustomerEvent(customer.Id,command.Username, customer.Name, command.Email,customer.Gender,customer.Birthday,customer.MaritalStatus);
+                var customerEvent = new CreateCustomerEvent(customer.Id, customer.Name,customer.Gender,customer.Birthday,customer.MaritalStatus);
                 await _bus.RaiseEvent(customerEvent);
 
-                return new CreateCustomerResponse(customer.Id, command.Username, customer.Name, command.Email, customer.Gender, customer.Birthday, customer.MaritalStatus);
+                return new CreateCustomerResponse(customer.Id, customer.Name, customer.Gender, customer.Birthday, customer.MaritalStatus);
             }
 
             return await Task.FromResult<CreateCustomerResponse>(null);

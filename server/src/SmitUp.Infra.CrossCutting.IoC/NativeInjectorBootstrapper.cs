@@ -1,12 +1,15 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using SmitUp.Customers.Domain.Commands.CustomerCommands.Create;
 using SmitUp.Customers.Domain.Interfaces;
 using SmitUp.Domain.Core.Behavior;
 using SmitUp.Domain.Core.Bus;
+using SmitUp.Domain.Core.Interfaces;
 using SmitUp.Domain.Core.Notifications;
 using SmitUp.Domain.Core.Transaction;
 using SmitUp.Infra.CrossCutting.Bus;
+using SmitUp.Infra.CrossCutting.Identity.Models;
 using SmitUp.Infra.Data.Repository;
 using SmitUp.Infra.Data.Uow;
 
@@ -16,6 +19,12 @@ namespace SmitUp.Infra.CrossCutting.IoC
     {
         public static void RegisterServices(this IServiceCollection services)
         {
+            // ASP.NET HttpContext
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            // Infra - Identity
+            services.AddScoped<IUser, UserAuthenticated>();
+
             // Domain Bus (Mediator)
             services.AddScoped<IMediatorHandler, InMemoryBus>();
 
