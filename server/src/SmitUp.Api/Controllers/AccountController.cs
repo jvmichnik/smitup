@@ -83,13 +83,14 @@ namespace SmitUp.Api.Controllers
             if (user == null)
             {
                 NotifyError("UserID", $"Unable to load user");
+                return ResponseBadRequest();
             }
 
             var emailToken = await _accessManager.GenerateEmailConfirmationToken(user);
 
             return Response(new
             {
-                EmailToken = emailToken
+                EmailConfirmCode = emailToken
             });
         }
 
@@ -99,14 +100,17 @@ namespace SmitUp.Api.Controllers
         {
             if (code == null)
             {
-                return BadRequest();
+                NotifyError("code", $"code value is required");
+                return ResponseBadRequest();
             }
             var userId = HttpContext.User.Identity.Name;
             var user = await _accessManager.GetUser(userId);
             if (user == null)
             {
                 NotifyError("UserID", $"Unable to load user");
+                return ResponseBadRequest();
             }
+
             var result = await _accessManager.ConfirmEmailToken(user, code);
 
             if (result.Succeeded)
