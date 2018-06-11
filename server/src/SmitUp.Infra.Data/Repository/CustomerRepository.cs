@@ -2,6 +2,7 @@
 using SmitUp.Customers.Domain.Entities;
 using SmitUp.Customers.Domain.Interfaces;
 using SmitUp.Infra.Data.Context;
+using System;
 using System.Threading.Tasks;
 
 namespace SmitUp.Infra.Data.Repository
@@ -15,6 +16,11 @@ namespace SmitUp.Infra.Data.Repository
         {
             _contexto = contexto;
             _customer = _contexto.Set<Customer>();
+        }
+
+        public async Task<Customer> GetCustomerByUser(Guid userId)
+        {
+            return await _customer.FirstOrDefaultAsync(x => x.UserId == userId);
         }
 
         public async Task SaveCustomer(Customer customer)

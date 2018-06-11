@@ -10,6 +10,5 @@ namespace SmitUp.Customers.Domain.Commands.CustomerCommands
         public string Gender { get; set; }
         public DateTime Birthday { get; set; }
         public EMaritalStatus MaritalStatus { get; set; }
-        public Guid UserId { get; set; }
     }
 }

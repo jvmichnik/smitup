@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace SmitUp.Infra.CrossCutting.Identity.Models.AccountViewModels
+namespace SmitUp.Api.Account.ViewModels
 {
     public class RegisterViewModel
     {

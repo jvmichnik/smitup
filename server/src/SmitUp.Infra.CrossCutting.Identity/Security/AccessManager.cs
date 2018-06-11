@@ -72,8 +72,8 @@ namespace SmitUp.Infra.CrossCutting.Identity.Security
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
-                new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString("D")),
+                new Claim("username", user.NormalizedUserName),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString("D")),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N"))
             };
 

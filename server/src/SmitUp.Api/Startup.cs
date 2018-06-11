@@ -1,19 +1,15 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
+using SmitUp.Api.AutoMapper;
 using SmitUp.Infra.CrossCutting.Identity.Data;
-using SmitUp.Infra.CrossCutting.Identity.Models;
-using SmitUp.Infra.CrossCutting.Identity.Security;
-using SmitUp.Infra.CrossCutting.Identity.Security.TokenConfig;
+using SmitUp.Infra.CrossCutting.Identity.Security.Extensions;
 using SmitUp.Infra.CrossCutting.IoC;
 using SmitUp.Infra.Data.Context;
-using System;
 
 namespace SmitUp.Api
 {
@@ -35,15 +31,16 @@ namespace SmitUp.Api
         public void ConfigureServices(IServiceCollection services)
         {
 
-            ConfigureIdentity(services);
+            ConfigureContexts(services);
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddCors();
 
             services.AddMediatR(typeof(Startup));
+
             services.RegisterServices();
 
-
+            services.AddAutoMapperSetup();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -69,36 +66,18 @@ namespace SmitUp.Api
             app.UseMvc();
         }
 
-        private void ConfigureIdentity(IServiceCollection services)
+        private void ConfigureContexts(IServiceCollection services)
         {
             services.AddEntityFrameworkNpgsql()
               .AddDbContext<SmitUpContext>(options => options.UseNpgsql(Configuration.GetConnectionString("smitup")));
 
             services.AddEntityFrameworkNpgsql()
-               .AddDbContext<SmitUpIdentityDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("smitup")));
+               .AddDbContext<IdentityContext>(options => options.UseNpgsql(Configuration.GetConnectionString("smitup")));
 
-            services.AddIdentity<User, Role>(
-                options =>
-                {
-                    options.User.RequireUniqueEmail = true;
-                })
-                .AddEntityFrameworkStores<SmitUpIdentityDbContext>()
-                .AddDefaultTokenProviders();
+            services.AddEntityFrameworkNpgsql()
+               .AddDbContext<EventStoreContext>(options => options.UseNpgsql(Configuration.GetConnectionString("smitup")));
 
-            services.AddScoped<AccessManager>();
-
-            //Melhorar
-            var signingConfigurations = new SigningConfigurations();
-            services.AddSingleton(signingConfigurations);
-
-            var tokenConfigurations = new TokenConfigurations();
-            new ConfigureFromConfigurationOptions<TokenConfigurations>(
-                Configuration.GetSection("TokenConfigurations"))
-                    .Configure(tokenConfigurations);
-            services.AddSingleton(tokenConfigurations);
-            //\\
-
-            services.AddJwtSecurity(signingConfigurations, tokenConfigurations);
+            services.AddIdentityConfiguration(Configuration.GetSection("TokenConfigurations"));
         }
     }
 }

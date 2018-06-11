@@ -2,15 +2,20 @@
 using SmitUp.Domain.Core.Bus;
 using SmitUp.Domain.Core.Commands;
 using SmitUp.Domain.Core.Events;
+using SmitUp.Domain.Core.Interfaces;
 using System.Threading.Tasks;
 
 namespace SmitUp.Infra.CrossCutting.Bus
 {
     public class InMemoryBus : Bus, IMediatorHandler
     {
+        private readonly IMediator _mediator;
+        private readonly IEventStore _eventStore;
 
-        public InMemoryBus(IMediator mediator) : base(mediator)
+        public InMemoryBus(IMediator mediator, IEventStore eventStore) : base(mediator)
         {
+            _eventStore = eventStore;
+            _mediator = mediator;
         }
 
         public async Task PublishCommand<T>(T command) where T : Command
@@ -27,7 +32,7 @@ namespace SmitUp.Infra.CrossCutting.Bus
         {
             if (!@event.MessageType.Equals("DomainNotification"))
             {
-                //await _eventStore?.Save(@event);
+                await _eventStore.Save(@event);
             }
 
             await Publish(@event);

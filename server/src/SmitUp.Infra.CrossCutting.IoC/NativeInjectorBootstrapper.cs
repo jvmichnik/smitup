@@ -9,8 +9,10 @@ using SmitUp.Domain.Core.Interfaces;
 using SmitUp.Domain.Core.Notifications;
 using SmitUp.Domain.Core.Transaction;
 using SmitUp.Infra.CrossCutting.Bus;
-using SmitUp.Infra.CrossCutting.Identity.Models;
+using SmitUp.Infra.CrossCutting.Identity;
+using SmitUp.Infra.Data.EventSourcing;
 using SmitUp.Infra.Data.Repository;
+using SmitUp.Infra.Data.Repository.EventSourcing;
 using SmitUp.Infra.Data.Uow;
 
 namespace SmitUp.Infra.CrossCutting.IoC
@@ -22,25 +24,29 @@ namespace SmitUp.Infra.CrossCutting.IoC
             // ASP.NET HttpContext
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            // Infra - Identity
-            services.AddScoped<IUser, UserAuthenticated>();
-
-            // Domain Bus (Mediator)
-            services.AddScoped<IMediatorHandler, InMemoryBus>();
-
-            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(CommandValidatorBehavior<,>));
-
-            // Domain - Events
-            RegisterEvents(services);
 
             //Domain - Commands
             RegisterCommands(services);
 
+            // Domain - Events
+            RegisterEvents(services);
+
             // Repositories
             RegisterRepositories(services);
 
-            // Unit of Work
-            RegisterUow(services);
+            // Infra - Identity
+            services.AddScoped<IUser, UserAuthenticated>();
+
+            // Infra - Unit of Work
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            // Infra - Bus
+            services.AddScoped<IMediatorHandler, InMemoryBus>();
+
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(CommandValidatorBehavior<,>));
+
+            // Infra - Data EventSourcing
+            RegisterEventStore(services);
         }
 
         private static void RegisterCommands(IServiceCollection services)
@@ -53,14 +59,15 @@ namespace SmitUp.Infra.CrossCutting.IoC
              services.AddScoped<ICustomerRepository, CustomerRepository>();
         }
 
-        private static void RegisterUow(IServiceCollection services)
-        {
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-        }
-
         private static void RegisterEvents(IServiceCollection services)
         {
             services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
+        }
+
+        private static void RegisterEventStore(IServiceCollection services)
+        {           
+            services.AddScoped<IEventStoreRepository, EventStoreRepository>();
+            services.AddScoped<IEventStore, EventStore>();
         }
     }
 }

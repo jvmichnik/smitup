@@ -19,8 +19,6 @@ namespace SmitUp.Customers.Domain.Commands.CustomerCommands
         private const string MARITAL_REQUIRED_MSG = "Marital Status is required.";
         private const string MARITAL_INVALID_MSG = "Marital Status is not valid.";
 
-        private const string USERID_REQUIRED_MSG = "User ID is required.";
-
         protected void ValidateName()
         {
             RuleFor(x => x.Name)
@@ -60,12 +58,6 @@ namespace SmitUp.Customers.Domain.Commands.CustomerCommands
 
             RuleFor(x => x.MaritalStatus)
                 .IsInEnum().WithMessage(MARITAL_INVALID_MSG);
-        }
-
-        protected void ValidateUserId()
-        {
-            RuleFor(x => x.UserId)
-                .NotEmpty().WithMessage(USERID_REQUIRED_MSG);
         }
     }
 }

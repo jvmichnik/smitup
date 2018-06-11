@@ -8,6 +8,7 @@ using SmitUp.Customers.Domain.Interfaces;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using SmitUp.Domain.Core.Interfaces;
 
 namespace SmitUp.Customers.Domain.Commands.CustomerCommands.Create
 {
@@ -15,17 +16,24 @@ namespace SmitUp.Customers.Domain.Commands.CustomerCommands.Create
     {
         private readonly IMediatorHandler _bus;
         private readonly ICustomerRepository _repository;
+        private readonly IUser _user;
 
-        public CreateCustomerHandler(IUnitOfWork uow, IMediatorHandler bus,INotificationHandler<DomainNotification> notifications, ICustomerRepository repository) 
+        public CreateCustomerHandler(IUnitOfWork uow, IMediatorHandler bus,INotificationHandler<DomainNotification> notifications, ICustomerRepository repository, IUser user) 
             : base(uow, bus, notifications)
         {
             _bus = bus;
             _repository = repository;
+            _user = user;
         }
 
         public async Task<CreateCustomerResponse> Handle(CreateCustomerCommand command, CancellationToken cancellationToken)
         {
-            var customer = new Customer(command.Name, command.Gender, command.Birthday, command.MaritalStatus, command.UserId);
+            var user = _user.Id;
+
+            if (await VerifyCustomerAlreadyCreatedToUser(user))
+                return await Task.FromResult<CreateCustomerResponse>(null);
+
+            var customer = new Customer(command.Name, command.Gender, command.Birthday, command.MaritalStatus, user);
 
             await _repository.SaveCustomer(customer);
 
@@ -38,6 +46,19 @@ namespace SmitUp.Customers.Domain.Commands.CustomerCommands.Create
             }
 
             return await Task.FromResult<CreateCustomerResponse>(null);
+        }
+
+        private async Task<bool> VerifyCustomerAlreadyCreatedToUser(Guid userId)
+        {
+            var customer = await _repository.GetCustomerByUser(userId);
+
+            if (customer != null)
+            {
+                await Notify("Customer", "Customer already exists for this user.");
+                return true;
+            }
+
+            return false;
         }
     }
 }

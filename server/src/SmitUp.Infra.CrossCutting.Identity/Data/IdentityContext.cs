@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SmitUp.Infra.CrossCutting.Identity.Mapping;
 using SmitUp.Infra.CrossCutting.Identity.Models;
@@ -7,9 +6,9 @@ using System;
 
 namespace SmitUp.Infra.CrossCutting.Identity.Data
 {
-    public class SmitUpIdentityDbContext : IdentityDbContext<User, Role, Guid>
+    public class IdentityContext : IdentityDbContext<User, Role, Guid>
     {
-        public SmitUpIdentityDbContext(DbContextOptions<SmitUpIdentityDbContext> options)
+        public IdentityContext(DbContextOptions<IdentityContext> options)
             : base(options)
         {
         }

@@ -7,13 +7,17 @@ namespace SmitUp.Customers.Domain.Commands.CustomerCommands.Create
 {
     public class CreateCustomerCommand : CustomerCommand, IRequest<CreateCustomerResponse>
     {
-        public CreateCustomerCommand(string name, string gender, DateTime birthday, EMaritalStatus maritalStatus, Guid userId)
+        public CreateCustomerCommand(string name, string gender, DateTime birthday, EMaritalStatus maritalStatus)
         {
             Name = name;
             Gender = gender;
             Birthday = birthday;
             MaritalStatus = maritalStatus;
-            UserId = userId;
+        }
+
+        public CreateCustomerCommand()
+        {
+
         }
 
         public async override Task<bool> IsValid()
