@@ -30,46 +30,43 @@ namespace SmitUp.Infra.CrossCutting.Identity.Security
             _signingConfigurations = signingConfigurations;
             _tokenConfigurations = tokenConfigurations;
         }
-        public async Task<IdentityResult> CreateUser(User user)
+        public Task<IdentityResult> CreateUser(User user)
         {
-            return await _userManager.CreateAsync(user, user.PasswordHash);
+            return _userManager.CreateAsync(user, user.PasswordHash);
         }
 
-        public async Task<User> GetUser(string userId)
+        public Task<User> GetUser(string userId)
         {
-            return await _userManager.FindByIdAsync(userId);
+            return _userManager.FindByIdAsync(userId);
         }
 
-        public async Task<string> GenerateEmailConfirmationToken(User user)
+        public Task<User> GetUserByUsername(string username)
         {
-            return await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            return _userManager.FindByNameAsync(username);
         }
 
-        public async Task<IdentityResult> ConfirmEmailToken(User user, string token)
+        public Task<string> GenerateEmailConfirmationToken(User user)
         {
-            return await _userManager.ConfirmEmailAsync(user,token);
+            return _userManager.GenerateEmailConfirmationTokenAsync(user);
         }
 
-        public async Task<Token> ValidateCredentials(User user)
+        public Task<IdentityResult> ConfirmEmailToken(User user, string token)
         {
-            var userIdentity = await _userManager
-                .FindByNameAsync(user.UserName);
-
-            if (userIdentity != null)
-            {
-                var resultadoLogin = await _signInManager
-                    .CheckPasswordSignInAsync(userIdentity, user.PasswordHash, false);               
-
-                if (resultadoLogin.Succeeded)
-                    return await GenerateToken(userIdentity);
-            }
-
-            return await Task.FromResult<Token>(null);
+            return _userManager.ConfirmEmailAsync(user, token);
         }
+
+        public Task<SignInResult> ValidateCredentials(User user, string password)
+        {
+            return _signInManager.CheckPasswordSignInAsync(user, password, true);
+        }
+
+
 
         public Task<Token> GenerateToken(User user)
         {
-            var claims = new List<Claim>
+            return Task.Run(() =>
+            {
+                var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim("username", user.NormalizedUserName),
@@ -77,37 +74,38 @@ namespace SmitUp.Infra.CrossCutting.Identity.Security
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N"))
             };
 
-            ClaimsIdentity identity = new ClaimsIdentity(
-                new GenericIdentity(user.Id.ToString("N"),"Login"),
-                claims
-            );
+                ClaimsIdentity identity = new ClaimsIdentity(
+                    new GenericIdentity(user.Id.ToString("N"), "Login"),
+                    claims
+                );
 
-            DateTime dataCriacao = DateTime.Now;
-            DateTime dataExpiracao = dataCriacao +
-                TimeSpan.FromSeconds(_tokenConfigurations.Seconds);
+                DateTime dataCriacao = DateTime.Now;
+                DateTime dataExpiracao = dataCriacao +
+                    TimeSpan.FromSeconds(_tokenConfigurations.Seconds);
 
-            var handler = new JwtSecurityTokenHandler();
-            var securityToken = handler.CreateToken(new SecurityTokenDescriptor
-            {
-                Issuer = _tokenConfigurations.Issuer,
-                Audience = _tokenConfigurations.Audience,
-                SigningCredentials = _signingConfigurations.SigningCredentials,
-                Subject = identity,
-                NotBefore = dataCriacao,
-                Expires = dataExpiracao
+                var handler = new JwtSecurityTokenHandler();
+                var securityToken = handler.CreateToken(new SecurityTokenDescriptor
+                {
+                    Issuer = _tokenConfigurations.Issuer,
+                    Audience = _tokenConfigurations.Audience,
+                    SigningCredentials = _signingConfigurations.SigningCredentials,
+                    Subject = identity,
+                    NotBefore = dataCriacao,
+                    Expires = dataExpiracao
+                });
+                var token = handler.WriteToken(securityToken);
+
+                var tokenResult = new Token()
+                {
+                    Authenticated = true,
+                    Created = dataCriacao.ToString("yyyy-MM-dd HH:mm:ss"),
+                    Expiration = dataExpiracao.ToString("yyyy-MM-dd HH:mm:ss"),
+                    AccessToken = token,
+                    Message = "OK"
+                };
+                return tokenResult;
             });
-            var token = handler.WriteToken(securityToken);
 
-            var tokenResult = new Token()
-            {
-                Authenticated = true,
-                Created = dataCriacao.ToString("yyyy-MM-dd HH:mm:ss"),
-                Expiration = dataExpiracao.ToString("yyyy-MM-dd HH:mm:ss"),
-                AccessToken = token,
-                Message = "OK"
-            };
-
-            return Task.FromResult(tokenResult);
         }
 
     }

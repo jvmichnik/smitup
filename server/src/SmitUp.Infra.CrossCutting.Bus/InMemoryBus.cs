@@ -28,12 +28,14 @@ namespace SmitUp.Infra.CrossCutting.Bus
             return await Send(request);
         }
 
+        public async Task PublishNotification<T>(T @event) where T : Notification
+        {
+            await Publish(@event);
+        }
+
         public async Task RaiseEvent<T>(T @event) where T : Event
         {
-            if (!@event.MessageType.Equals("DomainNotification"))
-            {
-                await _eventStore.Save(@event);
-            }
+            await _eventStore.Save(@event);           
 
             await Publish(@event);
         }

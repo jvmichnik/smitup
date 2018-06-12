@@ -71,7 +71,7 @@ namespace SmitUp.Api.Controllers
 
         protected void NotifyError(string code, string message)
         {
-            _mediator.RaiseEvent(new DomainNotification(code, message));
+            _mediator.PublishNotification(new DomainNotification(code, message));
         }
 
     }

@@ -3,7 +3,7 @@ using System;
 
 namespace SmitUp.Domain.Core.Notifications
 {
-    public class DomainNotification : Event
+    public class DomainNotification : Notification
     {
         public DomainNotification(string key, string value)
         {

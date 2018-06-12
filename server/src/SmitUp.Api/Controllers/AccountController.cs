@@ -1,9 +1,11 @@
 ﻿using System.Threading.Tasks;
+using System.Web;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SmitUp.Api.Account.ViewModels;
+using SmitUp.Api.ViewModels.Account;
 using SmitUp.Domain.Core.Bus;
 using SmitUp.Domain.Core.Notifications;
 using SmitUp.Infra.CrossCutting.Identity.Models;
@@ -68,14 +70,24 @@ namespace SmitUp.Api.Controllers
 
             var user = _mapper.Map<User>(loginViewModel);
 
-            var token = await _accessManager.ValidateCredentials(user);
+            var userIdentity = await _accessManager.GetUserByUsername(user.UserName);
 
-            if (token != null)
+            if (userIdentity != null)
             {
-                return Response(token);
+                var resultLogin = await _accessManager.ValidateCredentials(userIdentity, user.PasswordHash);
+                if (resultLogin.Succeeded)
+                {
+                    var token = await _accessManager.GenerateToken(userIdentity);
+                    return Response(token);
+                }
+                if (resultLogin.IsLockedOut)
+                {
+                    NotifyError("user", $"User is locked out");
+                    return ResponseBadRequest();
+                }
             }
-
-            return Response("Failed to authenticate");
+            NotifyError("user", $"Username or password is incorrect.");
+            return ResponseBadRequest();
         }
 
         [HttpPost]
@@ -86,7 +98,7 @@ namespace SmitUp.Api.Controllers
             var user = await _accessManager.GetUser(userId);
             if (user == null)
             {
-                NotifyError("user", $"unable to load user");
+                NotifyError("user", $"Unable to load user.");
                 return ResponseBadRequest();
             }
 
@@ -94,29 +106,28 @@ namespace SmitUp.Api.Controllers
 
             return Response(new
             {
-                EmailConfirmCode = emailToken
+                Code = HttpUtility.UrlEncode(emailToken)
             });
         }
 
-        [HttpPost]
+        [HttpGet]
+        [AllowAnonymous]
         [Route("account/confirm_email")]
-        public async Task<IActionResult> ConfirmEmail(string code)
+        public async Task<IActionResult> ConfirmEmail(ConfirmEmailViewModel confirmEmail)
         {
-            if (code == null)
+            if (!ModelState.IsValid)
             {
-                NotifyError("code", $"code value is required");
+                NotifyModelStateErrors();
                 return ResponseBadRequest();
             }
-
-            var userId = HttpContext.User.Identity.Name;
-            var user = await _accessManager.GetUser(userId);
+            var user = await _accessManager.GetUserByUsername(confirmEmail.Username);
             if (user == null)
             {
-                NotifyError("user", $"Unable to load user");
+                NotifyError("user", $"Username is incorrect.");
                 return ResponseBadRequest();
             }
 
-            var result = await _accessManager.ConfirmEmailToken(user, code);
+            var result = await _accessManager.ConfirmEmailToken(user, confirmEmail.Code);
 
             if (result.Succeeded)
                 return Response($"Email successfully confirmed");

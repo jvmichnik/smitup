@@ -7,15 +7,20 @@ namespace SmitUp.Domain.Core.Events
     public class StoredEvent : Event
     {
         public StoredEvent(Event theEvent, string data, string user)
+            :base(theEvent.AggregateId)
         {
             Id = Guid.NewGuid();
-            AggregateId = theEvent.AggregateId;
             MessageType = theEvent.MessageType;
             Data = data;
             User = user;
         }
 
-        protected StoredEvent() { }
+        protected StoredEvent()
+            :base(default(Guid))
+        {
+
+        }
+
 
         public Guid Id { get; private set; }
 

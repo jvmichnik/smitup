@@ -1,13 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace SmitUp.Domain.Core.Events
 {
-    public abstract class Event : Message
+    public class Notification : Message
     {
-        protected Event(Guid aggregateId)
+        protected Notification()
         {
             Timestamp = DateTime.Now;
-            AggregateId = aggregateId;
         }
 
         public DateTime Timestamp { get; private set; }

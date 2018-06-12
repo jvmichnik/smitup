@@ -10,6 +10,7 @@ namespace SmitUp.Domain.Core.Bus
         Task PublishCommand<T>(T command) where T : Command;
         Task<TResponse> SendCommand<TResponse>(IRequest<TResponse> command);
 
+        Task PublishNotification<T>(T @event) where T : Notification;
         Task RaiseEvent<T>(T @event) where T : Event;
     }
 }

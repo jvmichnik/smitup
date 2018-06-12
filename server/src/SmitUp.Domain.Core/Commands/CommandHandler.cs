@@ -34,7 +34,7 @@ namespace SmitUp.Domain.Core.Commands
 
         protected virtual Task Notify(DomainNotification notification)
         {
-            return _bus.RaiseEvent(notification);
+            return _bus.PublishNotification(notification);
         }
 
         protected virtual bool IsValid()

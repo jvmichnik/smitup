@@ -7,9 +7,9 @@ namespace SmitUp.Customers.Domain.Commands.CustomerCommands.Create
     public class CreateCustomerEvent : Event
     {
         public CreateCustomerEvent(Guid id, string name, string gender, DateTime birthday, EMaritalStatus maritalStatus)
+            : base(id)
         {
             Id = id;
-            AggregateId = id;
             Name = name;
             Gender = gender;
             Birthday = birthday;
